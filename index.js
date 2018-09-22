@@ -18,8 +18,8 @@ server.post('/getError',function (request,response)  {
 
 
 
-   //const Http = new XMLHttpRequest();
-   const Http = require("xmlhttprequest").XMLHttpRequest;
+   const Http = new XMLHttpRequest();
+   // const Http = require("xmlhttprequest").XMLHttpRequest;
    //const Http = new XMLHttpRequest();
    const postUrl='https://platform.uipath.com/api/account/authenticate';
    Http.open("POST",postUrl,true);
