@@ -14,7 +14,7 @@ server.use(bodyParser.json());
 
 
 
-server.post('/getError',function (request,response)  {
+server.post('/postError',function (request,response)  {
 
 
 
@@ -53,8 +53,9 @@ server.post('/getError',function (request,response)  {
 
   response.setHeader('Content-Type','application/json');
   response.send(JSON.stringify({
-    "speech" : "Error, try again",
-    "displayText" : "Error, try again text" }));
+    "speech" : "Working properly",
+    "displayText" : "working properly displayText",
+    "source" : "ui-path-webhook"}));
 
 });
 server.get('/getName',function (req,res){
