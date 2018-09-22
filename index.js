@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const restService = express();
 var querystring = require("querystring");
+var request = require("request");
 const Http = require("http");
 
 restService.use(
@@ -30,9 +31,7 @@ restService.post("/echo", function(req, res) {
 
 restService.post("/errors", function(req, res) {
 
-// const postUrl='https://platform.uipath.com/api/account/authenticate';
 
-var token ='';
 const postUrl='https://platform.uipath.com/api/account/authenticate';
 //  Http.open("POST",postUrl,true);
 //  Http.setRequestHeader('Content-Type', 'application/json');
@@ -43,29 +42,22 @@ const postUrl='https://platform.uipath.com/api/account/authenticate';
 // });
 
 //add querystring.stringify({})
-var post_data = querystring.stringify({
+var post_data = {
   "tenancyName" : "KartikKulks",
   "usernameOrEmailAddress" : "kartik.koolks@gmail.com",
   "password" : "Passw0rd"
-});
-var post_options = {
-  host: postUrl,
-  method: 'POST',
-  headers:{'Content-Type':'application/x-www-form-urlencoded',
-  'Content-Length': Buffer.byteLength(post_data)}
 };
 
-var post_req = http.request(post_options,function(res){
-  res.setEncoding('utf8');
-  res.on('data',function(chunk){
-    console.log('Response' + chunk);
-  });
+
+request.post(postUrl,
+{json:post_data},
+function(error,response,body){
+  if (!error && response.statusCode==200){
+    console.log(body);
+  }
 });
 
-post_req.write(post_data);
-console.log(post_data);
 
-//
 // request(post_options,function(error,presp, pbody){
 //   res.status(200).send(pbody);
 // });
