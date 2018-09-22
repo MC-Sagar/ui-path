@@ -2,9 +2,10 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const restService = express();
-
+const Http = new XMLHttpRequest();
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -28,28 +29,34 @@ restService.post("/echo", function(req, res) {
 });
 
 restService.post("/errors", function(req, res) {
-  // var speech =
-  //   req.body.result &&
-  //   req.body.result.parameters &&
-  //   req.body.result.parameters.echoText
-  //     ? req.body.result.parameters.echoText
-  //     : "Seems like some problem. Speak again.";
 
 // const postUrl='https://platform.uipath.com/api/account/authenticate';
-// restService.post()
-// restService.
 
-const Http = new XMLHttpRequest();
+var token ='';
 const postUrl='https://platform.uipath.com/api/account/authenticate';
-Http.open("POST",postUrl,true);
-Http.setRequestHeader('Content-Type', 'application/json');
-Http.send(JSON.stringify({
+ Http.open("POST",postUrl,true);
+ Http.setRequestHeader('Content-Type', 'application/json');
+ Http.send({
    "tenancyName" : "KartikKulks",
    "usernameOrEmailAddress" : "kartik.koolks@gmail.com",
    "password" : "Passw0rd"
-}));
-resp_bearer = Http.responseText.result; //Bearer token which gets expired after 30 mins
-Http.setRequestHeader('Authorization','Bearer ' + resp_bearer);
+});
+
+Http.onreadystatechange = function() {
+    if (Http.readyState == XMLHttpRequest.DONE) {
+        token = Http.responseText;
+    }
+}
+console.log(token)
+// restService.post(postUrl,function(reqq,ress){
+//   var tenancyName = "KartikKulks";
+//   var usernameOrEmailAddress = "kartik.koolks@gmail.com";
+//   var password = "Passw0rd";
+//   ress.send(tenancyName+' ' + usernameOrEmailAddress+' ' +password);
+// });
+
+//Bearer token which gets expired after 30 mins
+Http.setRequestHeader('Authorization','Bearer ' + token);
 Http.open("POST",post_jobs,true);
 Http.setRequestHeader('Content-Type', 'application/json');
 Http.send(JSON.stringify({
