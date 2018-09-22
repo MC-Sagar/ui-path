@@ -7,6 +7,8 @@ var querystring = require("querystring");
 var request = require("request");
 const Http = require("http");
 
+
+var bearer_token = '';
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -49,15 +51,30 @@ var post_data = {
 };
 
 
-request.post(postUrl,
-{json:post_data},
+request.post({
+headers:{'Content-Type':'application/json'},
+  url:postUrl,
+form:post_data
+},
 function(error,response,body){
+  bearer_token = response.result;
   if (!error && response.statusCode==200){
+
     console.log(body);
   }
 });
 
+const post_jobs='https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs';
 
+job_data = {"startInfo": {
+    "ReleaseKey": "dd0518b0-135b-46a3-8787-c796431f9b8e"
+  }};
+
+request.post({
+  headers:{'Content-Type':'application/json','Authorization':'Bearer '+bearer_token},
+  url: post_jobs,
+  form: job_data
+});
 // request(post_options,function(error,presp, pbody){
 //   res.status(200).send(pbody);
 // });
