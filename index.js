@@ -27,6 +27,45 @@ restService.post("/echo", function(req, res) {
   });
 });
 
+restService.post("/errors", function(req, res) {
+  // var speech =
+  //   req.body.result &&
+  //   req.body.result.parameters &&
+  //   req.body.result.parameters.echoText
+  //     ? req.body.result.parameters.echoText
+  //     : "Seems like some problem. Speak again.";
+
+// const postUrl='https://platform.uipath.com/api/account/authenticate';
+// restService.post()
+// restService.
+
+const Http = new XMLHttpRequest();
+const postUrl='https://platform.uipath.com/api/account/authenticate';
+Http.open("POST",postUrl,true);
+Http.setRequestHeader('Content-Type', 'application/json');
+Http.send(JSON.stringify({
+   "tenancyName" : "KartikKulks",
+   "usernameOrEmailAddress" : "kartik.koolks@gmail.com",
+   "password" : "Passw0rd"
+}));
+resp_bearer = Http.responseText.result; //Bearer token which gets expired after 30 mins
+Http.setRequestHeader('Authorization','Bearer ' + resp_bearer);
+Http.open("POST",post_jobs,true);
+Http.setRequestHeader('Content-Type', 'application/json');
+Http.send(JSON.stringify({
+ "startInfo": {
+   "ReleaseKey": "dd0518b0-135b-46a3-8787-c796431f9b8e"
+ }
+}));
+
+
+  return res.json({
+    speech: " error fallback done",
+    displayText: "test for fallback error done",
+    source: "webhook-echo-sample"
+  });
+});
+
 restService.post("/audio", function(req, res) {
   var speech = "";
   switch (req.body.result.parameters.AudioSample.toLowerCase()) {
