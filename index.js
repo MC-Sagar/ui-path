@@ -2,10 +2,9 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const restService = express();
-const Http = new XMLHttpRequest();
+var querystring = require("querystring");
+const Http = require("http");
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -34,20 +33,45 @@ restService.post("/errors", function(req, res) {
 
 var token ='';
 const postUrl='https://platform.uipath.com/api/account/authenticate';
- Http.open("POST",postUrl,true);
- Http.setRequestHeader('Content-Type', 'application/json');
- Http.send({
-   "tenancyName" : "KartikKulks",
-   "usernameOrEmailAddress" : "kartik.koolks@gmail.com",
-   "password" : "Passw0rd"
+//  Http.open("POST",postUrl,true);
+//  Http.setRequestHeader('Content-Type', 'application/json');
+//  Http.send({
+//    "tenancyName" : "KartikKulks",
+//    "usernameOrEmailAddress" : "kartik.koolks@gmail.com",
+//    "password" : "Passw0rd"
+// });
+
+//add querystring.stringify({})
+var post_data = {
+  "tenancyName" : "KartikKulks",
+  "usernameOrEmailAddress" : "kartik.koolks@gmail.com",
+  "password" : "Passw0rd"
+};
+var post_options = {
+  host: postUrl,
+  method: 'POST',
+  headers:{
+    'Content-Type':'application/json'
+  }
+};
+
+var post_req = http.request(post_options,function(res){
+  res.on('data',function(chunk){
+    console.log('Response'+chunk);
+  });
 });
 
-Http.onreadystatechange = function() {
-    if (Http.readyState == XMLHttpRequest.DONE) {
-        token = Http.responseText;
-    }
-}
-console.log(token)
+post_req.write(post_data);
+post_req.end();
+
+//
+//
+// Http.onreadystatechange = function() {
+//     if (Http.readyState == XMLHttpRequest.DONE) {
+//         token = Http.responseText;
+//     }
+// }
+// console.log(token)
 // restService.post(postUrl,function(reqq,ress){
 //   var tenancyName = "KartikKulks";
 //   var usernameOrEmailAddress = "kartik.koolks@gmail.com";
