@@ -29,13 +29,13 @@ server.post('/getError',function (request,response)  {
       "usernameOrEmailAddress" : "kartik.koolks@gmail.com",
       "password" : "Passw0rd"
    }));
-   resp_bearer = Http.responseText.result
+   resp_bearer = Http.responseText.result;
+   console.log(resp_bearer);
 
 
+   post_jobs='https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs';
 
-   post_jobs='https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs'
-
-   Http.setRequestHeader('Authorization','Bearer ' + resp_bearer)
+   Http.setRequestHeader('Authorization','Bearer ' + resp_bearer);
    Http.open("POST",post_jobs,true);
    Http.setRequestHeader('Content-Type', 'application/json');
 
@@ -46,7 +46,7 @@ server.post('/getError',function (request,response)  {
     "startInfo": {
       "ReleaseKey": "dd0518b0-135b-46a3-8787-c796431f9b8e"
     }
-  }))
+  }));
 
 
 
