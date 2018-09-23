@@ -31,7 +31,7 @@ restService.post("/echo", function(req, res) {
   });
 });
 
-restService.post("/errors", function(req, res) {
+restService.get("/errors", function(req, res) {
 
 
 const postUrl='https://platform.uipath.com/api/account/authenticate';
@@ -51,26 +51,29 @@ var post_data = {
 };
 
 
-request.post({
+request({
+method:'POST',
 headers:{'Content-Type':'application/json'},
   url:postUrl,
 form:post_data
 },
-function(error,response,body){
-  bearer_token = response.result;
+ function(error,response,body){
+  bearer_token = response.body.result;
+  // console.log(response);
   if (!error && response.statusCode==200){
 
-    console.log(body);
+  //  console.log(body);
   }
 });
+console.log(bearer_token);
 
 const post_jobs='https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs';
 
-job_data = {"startInfo": {
+var job_data = {"startInfo": {
     "ReleaseKey": "dd0518b0-135b-46a3-8787-c796431f9b8e"
   }};
-
-request.post({
+console.log(bearer_token);
+request({
   headers:{'Content-Type':'application/json','Authorization':'Bearer '+bearer_token},
   url: post_jobs,
   form: job_data
