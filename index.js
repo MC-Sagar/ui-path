@@ -33,7 +33,7 @@ restService.post("/echo", function(req, res) {
   });
 });
 
-restService.get("/errors", function(req, res) {
+restService.put("/errors", function(req, res) {
 
 
 const postUrl='https://platform.uipath.com/api/account/authenticate';
