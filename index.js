@@ -7,9 +7,9 @@ var server = express();
 var token = '';
 
 var myjson = {
-    "tenancyName" : "KartikKulks",
-    "usernameOrEmailAddress" : "kartik.koolks@gmail.com",
-    "password" : "Passw0rd"
+    "tenancyName" : "<Your Tenacy Name>",
+    "usernameOrEmailAddress" : "<Your Email>",
+    "password" : "<Your password for the orchestrator>"
  }
 
 server.get('/postError',function (request,response)  {
