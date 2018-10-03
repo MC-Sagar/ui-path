@@ -1,0 +1,17 @@
+{
+  "name": "clean-tmp-files",
+  "description": "Blank Project",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.Core.Activities": "18.2.6761.24851",
+    "UiPath.Excel.Activities": "2.3.6682.26635"
+  },
+  "excludedData": [
+    "Private:*",
+    "*password*"
+  ],
+  "toolVersion": "18.2",
+  "projectVersion": "1.0.6839.31801",
+  "packOptions": {},
+  "runtimeOptions": {}
+}
